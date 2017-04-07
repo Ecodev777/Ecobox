@@ -1,0 +1,56 @@
+#include <SPI.h>
+#include <SD.h>
+
+File fichierSD;
+int n = 0;
+
+
+void setup() {
+  
+  Serial.begin(9600);
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+  pinMode(A3, INPUT);
+  pinMode(A4, INPUT);
+  
+  if(SD.begin(10)){
+    Serial.println("SD ok");
+  }else{
+    Serial.println("SD not ok");
+  }
+
+}
+void loop() {
+  
+  n++;
+  fichierSD = SD.open("text.txt", FILE_WRITE);
+  fichierSD.print("Mesure ");
+  fichierSD.print(n);
+  fichierSD.print(" : ");
+  fichierSD.print(analogRead(A0));
+  fichierSD.print(" ; ");
+  fichierSD.print(analogRead(A1));
+  fichierSD.print(" ; ");
+  fichierSD.print(analogRead(A2));
+  fichierSD.print(" ; ");
+  fichierSD.print(analogRead(A3));
+  fichierSD.print(" ; ");
+  fichierSD.println(analogRead(A4));
+  fichierSD.close();
+   
+  Serial.print("Mesure ");
+  Serial.print(n);
+  Serial.print(" : ");
+  Serial.print(analogRead(A0));
+  Serial.print(" ; ");
+  Serial.print(analogRead(A1));
+  Serial.print(" ; ");
+  Serial.print(analogRead(A2));
+  Serial.print(" ; ");
+  Serial.print(analogRead(A3));
+  Serial.print(" ; ");
+  Serial.println(analogRead(A4));
+  
+  delay(1000);
+}
